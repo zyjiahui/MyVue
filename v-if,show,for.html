@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-if v-show v-for</title>
+    <!--  v-if和v-if的区别
+          v-if对应的属性值为false时，标签被移除，而v-show对应的属性值为false时，
+          标签会被隐藏，即display标签变为none
+          多次频繁改变隐藏和显示功能时，推荐使用v-show，变化频率低时建议使用v-if
+     -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script></head>
+<body>
+<div id="root">
+    <div v-if="show">hello world</div>
+    <button @click="handleClick">tog</button>
+    <ul>
+        <li v-for="(item,index) of list" :key="index">{{item}}</li>  <!--循环展示li标签-->
+        <!--每一项数据key值不能相同-->
+    </ul>
+</div>
+<script>
+    new Vue({
+        el: "#root",
+        data:{
+            show: true,
+            list: [1,2,3,4],
+        },
+        methods: {
+            <!--隐藏变显示，显示变隐藏-->
+            handleClick: function () {
+                return this.show = !this.show;
+            }
+        }
+    })
+</script>
+</body>
+</html>
