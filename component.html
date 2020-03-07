@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件的拆分，便于维护管理</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <div>
+        <input v-model="inputValue" />
+        <button @click="handleSubmit">提交</button>
+    </div>
+    <ul>
+        <!--对组件的使用-->
+        <todo-item v-for="(item,index) of list" :key="index" :content="item">  <!--传参item-->
+        </todo-item>
+    </ul>
+</div>
+
+<script>
+    // 注册一个全局组件，todo-item为被使用时的名字，template为模板
+    Vue.component('todo-item',{
+        props: ['content'],
+        template:'<li>{{content}}</li>'//在此不能直接使用content，需要接收
+    })
+
+    //***注册一个局部组件(必须在最外层vue实例中，注册该组件)
+    // var TodoItem={
+    //     template:'<li>item</li>'
+    // }
+
+    new Vue({
+        el: "#root",
+        //***注册局部组件，应用的时候的名字为todo-item，即通过todo-item标签来使用TodoItem组件
+        // component: {
+        //     'todo-item':TodoItem
+        // },
+
+        data: {
+            inputValue: '',
+            list: [],
+        },
+        methods: {
+            handleSubmit: function () {
+                this.list.push(this.inputValue);
+                this.inputValue = '';
+            }
+        }
+    })
+</script>
+</body>
+</html>
